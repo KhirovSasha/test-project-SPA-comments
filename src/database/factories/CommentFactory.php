@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,16 +25,17 @@ class CommentFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'ParentCommentID' => null,
+                'parentCommentID' => null,
             ];
         });
     }
 
-    public function withParentComment($parentCommentId)
+    public function withParentComment()
     {
-        return $this->state(function (array $attributes) use ($parentCommentId) {
+        return $this->state(function (array $attributes) {
+            $parentCommentId = Comment::factory()->nullParentCommentId()->create()->id;
             return [
-                'ParentCommentID' => $parentCommentId,
+                'parentCommentID' => $parentCommentId,
             ];
         });
     }
