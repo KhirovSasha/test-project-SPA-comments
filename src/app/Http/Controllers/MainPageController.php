@@ -28,7 +28,7 @@ class MainPageController extends Controller
 
         $comments = $commentsResult['comments']->paginate(25);
 
-        return Inertia::render('MainePage', [
+        return Inertia::render('MainPage', [
             'comments' => CommentResource::collection($comments),
             'sort' => $commentsResult['sort'],
             'urlWithParameters' => $commentsResult['urlWithParameters'],
