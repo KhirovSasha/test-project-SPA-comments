@@ -8,6 +8,7 @@ npm install
 
 docker-compose up -d 
 
+docker exec -it project_app bash
 php artisan key:generate 
 
 php artisan migrate
