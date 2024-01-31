@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CommentResource;
-use App\Http\Resources\UserResource;
 use App\Http\Services\CommentServices;
-use App\Models\Comment;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class MainPageController extends Controller
@@ -32,10 +28,8 @@ class MainPageController extends Controller
             'comments' => CommentResource::collection($comments),
             'sort' => $commentsResult['sort'],
             'urlWithParameters' => $commentsResult['urlWithParameters'],
-            'sortAttribute' => $commentsResult['sortAttribute']
+            'sortAttribute' => $commentsResult['sortAttribute'],
+            'captcha' => captcha_src(),
         ]);
     }
-
-
-
 }

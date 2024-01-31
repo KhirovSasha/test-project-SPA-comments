@@ -1,27 +1,28 @@
 <script setup>
 import Pagination from "@/Components/Pagination.vue";
+import Modal from "@/Components/Modal.vue";
 import { defineProps, ref, onMounted } from 'vue';
-import {Link} from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { format, differenceInHours, parseISO } from 'date-fns';
 
-const { comments, urlWithParameters, sort, sortAttribute } = defineProps(['comments', 'urlWithParameters', 'sort', 'sortAttribute']);
+const { comments, urlWithParameters, sort, sortAttribute, captcha } = defineProps(['comments', 'urlWithParameters', 'sort', 'sortAttribute', 'captcha']);
 
 const sortUrl = ref(`${comments.meta.path}/?page=${comments.meta.current_page}&sort=${sort === 'ASC' && sortAttribute === 'userName' ? '-userName' : 'userName'}`);
 const sortEmail = ref(`${comments.meta.path}/?page=${comments.meta.current_page}&sort=${sort === 'ASC' && sortAttribute === 'email' ? '-email' : 'email'}`);
 const sortCrateAt = ref(`${comments.meta.path}/?page=${comments.meta.current_page}&sort=${sort === 'ASC' && sortAttribute === 'created_at' ? '-created_at' : 'created_at'}`);
 
-onMounted(() =>{
-    if(urlWithParameters != null) {
+onMounted(() => {
+    if (urlWithParameters != null) {
         comments.meta.links.forEach((e, index) => {
 
-            if(e.url != null && index !== 0 && index !== comments.meta.links.length - 1) {
+            if (e.url != null && index !== 0 && index !== comments.meta.links.length - 1) {
                 const parts = urlWithParameters.split('&');
-                e.url = comments.meta.path +  parts[0].slice(0, -1)+e.label + '&' + parts[1];
+                e.url = comments.meta.path + parts[0].slice(0, -1) + e.label + '&' + parts[1];
             }
 
         })
 
-        if(comments.meta.links[0].url == null){
+        if (comments.meta.links[0].url == null) {
             comments.meta.links[comments.meta.links.length - 1].url = modifyUrlLastChar('increment');
         } else {
             comments.meta.links[0].url = modifyUrlLastChar('decrement');
@@ -60,26 +61,35 @@ const modifyUrlLastChar = (operation) => {
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900" v-if="comments" >
-                    <Pagination :links="comments.meta.links"  />
+                <div class="p-6 text-gray-900" v-if="comments">
+
+                    <Modal :captcha="captcha"/>
+                    
+                    <Pagination :links="comments.meta.links" />
+
                     <table>
                         <tr>
                             <th>№</th>
-                            <th><Link :href="sortUrl">User Name</Link></th>
-                            <th><Link :href="sortEmail">Email</Link></th>
+                            <th>
+                                <Link :href="sortUrl">User Name</Link>
+                            </th>
+                            <th>
+                                <Link :href="sortEmail">Email</Link>
+                            </th>
                             <th>Comment</th>
-                            <th><Link :href="sortCrateAt">Create at</Link></th>
-                        </tr>
-                        <tr v-for="(comment, index) in comments.data">
-                            <td>{{ (comments.meta.current_page - 1) * comments.meta.per_page + index + 1}}</td>
-                            <td>{{ comment.userName }}</td>
-                            <td>{{ comment.userEmail }}</td>
-                            <td>{{ comment.text }}</td>
-                            <td>{{ formatDateOrTime(comment.createdAt) }}</td>
-                        </tr>
-                    </table>
-                </div>
+                            <th>
+                                <Link :href="sortCrateAt">Create at</Link>
+                        </th>
+                    </tr>
+                    <tr v-for="(comment, index) in comments.data">
+                        <td>{{ (comments.meta.current_page - 1) * comments.meta.per_page + index + 1 }}</td>
+                        <td>{{ comment.userName }}</td>
+                        <td>{{ comment.userEmail }}</td>
+                        <td>{{ comment.text }}</td>
+                        <td>{{ formatDateOrTime(comment.createdAt) }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-</template>
+</div></template>
