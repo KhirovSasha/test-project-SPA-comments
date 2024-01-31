@@ -7,10 +7,14 @@ RUN apt-get update && apt-get install -y \
       libpq-dev \
       libpng-dev \
       libzip-dev \
+      libgd-dev \
+      libfreetype6-dev \
+      libjpeg62-turbo-dev \
       zip unzip \
       git && \
       docker-php-ext-install pdo_mysql && \
       docker-php-ext-install bcmath && \
+      docker-php-ext-configure gd --with-freetype --with-jpeg && \
       docker-php-ext-install gd && \
       docker-php-ext-install zip && \
       apt-get clean && \
