@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\MainPageController;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,5 @@ Route::get('/', [MainPageController::class, 'index'])->middleware(['jwt.auth', '
 
 Route::get('/reload-captcha', [CaptchaController::class, 'reloadCaptcha']);
 Route::post('/captcha-validation', [CaptchaController::class, 'capthcaFormValidate']);
+
+Route::get('/user-authentication', [AuthController::class, 'index'])->name('user-authentication');
