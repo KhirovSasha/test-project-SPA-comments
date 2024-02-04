@@ -45,4 +45,13 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($user) {
+            // Хешування пароля перед збереженням
+            $user->password = Hash::make($user->password);
+        });
+    }
 }
