@@ -15,5 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Comment::factory(50)->withParentComment()->create();
+
+        User::factory()->create([
+            'userName' => 'test',
+            'email' => 'email@test.com',
+            'password' => 'test'
+        ]);
     }
 }
