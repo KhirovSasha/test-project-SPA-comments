@@ -170,6 +170,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class
     ])->toArray(),
 
     /*
