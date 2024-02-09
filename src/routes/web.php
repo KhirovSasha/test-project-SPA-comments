@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CaptchaController;
-use App\Http\Controllers\MainPageController;
+use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', [MainPageController::class, 'index'])->middleware(['jwt.auth', 'redirectUnauthorized']);
-
-Route::get('/reload-captcha', [CaptchaController::class, 'reloadCaptcha']);
-Route::post('/captcha-validation', [CaptchaController::class, 'capthcaFormValidate']);
-
-Route::get('/user-authentication', [AuthController::class, 'index'])->name('user-authentication');
+Route::get('{page}', IndexController::class)->where('page', '.*');

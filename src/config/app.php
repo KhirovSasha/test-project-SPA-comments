@@ -163,14 +163,11 @@ return [
         /*
          * Application Service Providers...
          */
-        Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Mews\Captcha\CaptchaServiceProvider::class,
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class
     ])->toArray(),
 
     /*
@@ -186,9 +183,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Captcha' => Mews\Captcha\Facades\Captcha::class,
-        'Debugbar' => \Barryvdh\Debugbar\Facades\Debugbar::class,
-        
     ])->toArray(),
 
 ];
